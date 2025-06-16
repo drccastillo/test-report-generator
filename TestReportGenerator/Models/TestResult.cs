@@ -1,15 +1,11 @@
-namespace TestReportGenerator.Models;
-
-// TODO: This class should implement an interface (Interface Segregation Principle)
-// HINT: Create ITestResult interface in Models folder
-public class TestResult
+namespace TestReportGenerator.Models
 {
-  public string? TestName { get; set; }
-  public string? Status { get; set; }
-  public double Duration { get; set; }
-  public string? Category { get; set; }
-  public string? Priority { get; set; }
-
-  // TODO: No validation - consider adding validation in setters or using Builder pattern
-  // HINT: Status should be an enum, Duration should be positive
+    public class TestResult : ITestResult
+    {
+        public string TestName { get; set; } = string.Empty;
+        public TestStatus Status { get; set; }
+        public double Duration { get; set; }
+        public string Category { get; set; } = string.Empty;
+        public string Priority { get; set; } = string.Empty;
+    }
 }

@@ -1,0 +1,88 @@
+@startuml
+package Parsers {
+  interface ITestResultParser
+  class CsvParser
+  class JsonParser
+  class XmlParser
+}
+
+package Models {
+  interface ITestResult
+  class TestResult
+  enum TestStatus
+}
+
+package Services {
+  interface IFileReader
+  class FileReader
+}
+
+package Factories {
+  interface IParserFactory
+  class ParserFactory
+}
+
+package Analysis {
+  interface ITestAnalyzer
+  class TestAnalyzer
+  class TestAnalysisResult
+  class CategoryAnalysisResult
+  class PriorityAnalysisResult
+}
+
+package Decorators {
+  interface IReportSection
+  class SummarySection
+  class CategorySection
+  class FailedTestsSection
+  class PrioritySection
+}
+
+package Reports {
+  interface IReportGenerator
+  abstract class BaseReportGenerator
+  class ConsoleReportGenerator
+  package Builders {
+    class ReportBuilder
+  }
+}
+
+package Facades {
+  interface ITestReportFacade
+  class TestReportFacade
+}
+
+class ReportGeneratorCli
+
+ITestResultParser <|-- CsvParser
+ITestResultParser <|-- JsonParser
+ITestResultParser <|-- XmlParser
+
+ITestResult <|-- TestResult
+
+IFileReader <|-- FileReader
+
+IParserFactory <|-- ParserFactory
+
+ITestAnalyzer <|-- TestAnalyzer
+TestAnalyzer --> TestAnalysisResult
+TestAnalysisResult --> CategoryAnalysisResult
+TestAnalysisResult --> PriorityAnalysisResult
+
+IReportSection <|-- SummarySection
+IReportSection <|-- CategorySection
+IReportSection <|-- FailedTestsSection
+IReportSection <|-- PrioritySection
+
+IReportGenerator <|-- BaseReportGenerator
+BaseReportGenerator <|-- ConsoleReportGenerator
+ConsoleReportGenerator --> ReportBuilder
+ReportBuilder --> IReportSection
+
+ITestReportFacade <|-- TestReportFacade
+TestReportFacade --> IFileReader
+TestReportFacade --> IParserFactory
+TestReportFacade --> IReportGenerator
+
+ReportGeneratorCli --> ITestReportFacade
+@enduml
